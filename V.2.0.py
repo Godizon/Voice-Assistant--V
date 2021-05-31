@@ -36,8 +36,10 @@ def speak(audio):
 
 def wishMe():
 	hour = int(datetime.datetime.now().hour)
-	if hour>= 0 and hour<12:
+	if hour>= 5 and hour<12:
 		speak("Good Morning Sir !")
+	elif hour>= 0 and hour<5:
+		speak("Good Evening Sir! Maybe you should be sleeping?")
 
 	elif hour>= 12 and hour<18:
 		speak("Good Afternoon Sir !")
@@ -85,14 +87,14 @@ def takeCommand():
 	
 	return query
 
-def sendEmail(to, content):
+def sendEmail(email_id,email_password,to, content):
 	server = smtplib.SMTP('smtp.gmail.com', 587)
 	server.ehlo()
 	server.starttls()
 	
 	# Enable low security in gmail
-	server.login('your email id', 'your email password')
-	server.sendmail('your email id', to, content)
+	server.login(email_id , email_password)
+	server.sendmail(email_id, to, content)
 	server.close()
 if __name__ == '__main__':
 	clear = lambda: os.system('cls')
@@ -147,7 +149,7 @@ if __name__ == '__main__':
 			codePath = r"C:\\Users\\GAURAV\\AppData\\Local\\Programs\\Opera\\launcher.exe"
 			os.startfile(codePath)
 
-		elif 'email to gaurav' in query:
+		elif 'email to dwaith' in query:
 			try:
 				speak("What should I say?")
 				content = takeCommand()
@@ -160,11 +162,15 @@ if __name__ == '__main__':
 
 		elif 'send a mail' in query:
 			try:
+				speak("Enter your email_id")
+				email_id=input()
+				speak("Enter your password")
+				email_password=input()
 				speak("What should I say?")
 				content = takeCommand()
-				speak("whome should i send")
+				speak("whom should i send it to")
 				to = input()
-				sendEmail(to, content)
+				sendEmail(email_id,email_password,to, content)
 				speak("Email has been sent !")
 			except Exception as e:
 				print(e)
@@ -344,7 +350,6 @@ if __name__ == '__main__':
 					if ch:
 					 Pypdf.write(ch)
 					
-		# NPPR9-FWDCX-D2C8J-H872K-2YT43
 		elif "jarvis" in query:
 			
 			wishMe()
@@ -401,13 +406,13 @@ if __name__ == '__main__':
 
 		# most asked question from google Assistant
 		elif "will you be my gf" in query or "will you be my bf" in query:
-			speak("I'm not sure about, may be you should give me some time")
+			speak("I'm not sure about that, may be you should give me some more time")
 
 		elif "how are you" in query:
-			speak("I'm fine, glad you me that")
+			speak("I'm fine, glad you asked me that")
 
 		elif "i love you" in query:
-			speak("It's hard to understand")
+			speak("It's too hard for me to comprehend the significance of such words")
 
 		elif "what is" in query or "who is" in query:
 			
