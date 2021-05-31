@@ -129,9 +129,19 @@ if __name__ == '__main__':
 			speak("Here you go to Google\n")
 			webbrowser.get('chrome').open("google.com")
 
+		elif 'open instagram' in query:
+			speak("Here you go to Instagram\n")
+			webbrowser.get('chrome').open("instagram.com")
+
 		elif 'open stackoverflow' in query:
 			speak("Here you go to Stack Over flow.Happy coding")
 			webbrowser.get('chrome').open("stackoverflow.com")
+
+		elif 'open' and 'in browser' in query:
+			speak("Here you go to requested site\n")
+			query = query.replace('open ', "")
+			query = query.replace(' in browser', "")
+			webbrowser.get('chrome').open(query+".com")
 
 		elif 'play music' in query or "play song" in query:
 			speak("Here you go with music")
