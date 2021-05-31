@@ -196,7 +196,7 @@ if __name__ == '__main__':
 			exit()
 
 		elif "who made you" in query or "who created you" in query:
-			speak("I have been created by Gaurav.")
+			speak("I have been created by Godizon.")
 			
 		elif 'joke' in query:
 			speak(pyjokes.get_joke())
@@ -226,7 +226,7 @@ if __name__ == '__main__':
 
 		elif 'power point presentation' in query:
 			speak("opening Power Point presentation")
-			power = r"C:\\Users\\GAURAV\\Desktop\\Minor Project\\Presentation\\Voice Assistant.pptx"
+			#power = r"file location"
 			os.startfile(power)
 
 		elif 'is love' in query:
