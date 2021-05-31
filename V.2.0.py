@@ -144,19 +144,30 @@ if __name__ == '__main__':
 			webbrowser.get('chrome').open(query+".com")
 
 		elif 'play music' in query or "play song" in query:
-			speak("Here you go with music")
+			speak("What streaming service do you prefer Spotify , Youtube or Local Storage")
 			# music_dir = "G:\\Song"
-			music_dir = "C:\\Users\\GAURAV\\Music"
-			songs = os.listdir(music_dir)
-			print(songs)
-			random = os.startfile(os.path.join(music_dir, songs[1]))
+			#music_dir = "C:\\Users\\Administartor\\Music"
+			#songs = os.listdir(music_dir)
+			#print(songs)
+			#random = os.startfile(os.path.join(music_dir, songs[1]))
+			choice=takeCommand()
+			if "spotify" or "Spotify" in choice:
+					webbrowser.get('chrome').open("https://open.spotify.com/")
+			elif "youtube" or "Youtube" in choice:
+					webbrowser.get('chrome').open("youtube.com")
+			else:
+				music_dir = "C:\\Users\\Administartor\\Music"
+				songs = os.listdir(music_dir)
+				print(songs)
+				random = os.startfile(os.path.join(music_dir, songs[1]))
+
 
 		elif 'the time' in query:
 			strTime = datetime.datetime.now().strftime("% H:% M:% S")
 			speak(f"Sir, the time is {strTime}")
 
 		elif 'open opera' in query:
-			codePath = r"C:\\Users\\GAURAV\\AppData\\Local\\Programs\\Opera\\launcher.exe"
+			codePath = r"C:\\Users\\Administrator\\AppData\\Local\\Programs\\Opera\\launcher.exe"
 			os.startfile(codePath)
 
 		elif 'email to dwaith' in query:
