@@ -167,19 +167,9 @@ if __name__ == '__main__':
 			speak(f"Sir, the time is {strTime}")
 
 		elif 'open opera' in query:
+			#use what is necessary for your pc
 			codePath = r"C:\\Users\\Administrator\\AppData\\Local\\Programs\\Opera\\launcher.exe"
 			os.startfile(codePath)
-
-		elif 'email to dwaith' in query:
-			try:
-				speak("What should I say?")
-				content = takeCommand()
-				to = "Receiver email address"
-				sendEmail(to, content)
-				speak("Email has been sent !")
-			except Exception as e:
-				print(e)
-				speak("I am not able to send this email")
 
 		elif 'send a mail' in query:
 			try:
@@ -239,31 +229,33 @@ if __name__ == '__main__':
 			print("The answer is " + answer)
 			speak("The answer is " + answer)
 
-		elif 'search' in query or 'play' in query:
+		#elif 'search' in query or 'play' in query:
 			
-			query = query.replace("search", "")
-			query = query.replace("play", "")		
-			webbrowser.open(query)
+			#query = query.replace("search", "")
+			#query = query.replace("play", "")		
+			#webbrowser.open(query)
+			#print("hello")
+			#webbrowser.get('windows-default').open("http://google.com/?#q="+query)
 
 		elif "who i am" in query:
 			speak("If you talk then definately your human.")
 
 		elif "why you came to world" in query:
-			speak("Thanks to Gaurav. further It's a secret")
+			speak("To Serve")
 
 		elif 'power point presentation' in query:
 			speak("opening Power Point presentation")
 			#power = r"file location"
 			os.startfile(power)
 
-		elif 'is love' in query:
+		elif 'what is love' in query:
 			speak("It is 7th sense that destroy all other senses")
 
 		elif "who are you" in query:
-			speak("I am your virtual assistant created by Gaurav")
+			speak("I am your virtual assistant created by godizon")
 
 		elif 'reason for you' in query:
-			speak("I was created as a Minor project by Mister Gaurav ")
+			speak("I was created as a Minor project by godizon ")
 
 		elif 'change background' in query:
 			ctypes.windll.user32.SystemParametersInfoW(20,
@@ -320,10 +312,10 @@ if __name__ == '__main__':
 			location = query
 			speak("User asked to Locate")
 			speak(location)
-			webbrowser.open("https://www.google.nl / maps / place/" + location + "")
+			webbrowser.open("https://www.google.com / maps / place/" + location + "")
 
 		elif "camera" in query or "take a photo" in query:
-			ec.capture(0, "Jarvis Camera ", "img.jpg")
+			ec.capture(0, "V Camera ", "img.jpg")
 
 		elif "restart" in query:
 			subprocess.call(["shutdown", "/r"])
@@ -340,11 +332,11 @@ if __name__ == '__main__':
 		elif "write a note" in query:
 			speak("What should i write, sir")
 			note = takeCommand()
-			file = open('jarvis.txt', 'w')
+			file = open('v.txt', 'w')
 			speak("Sir, Should i include date and time")
 			snfm = takeCommand()
 			if 'yes' in snfm or 'sure' in snfm:
-				strTime = datetime.datetime.now().strftime("% H:% M:% S")
+				strTime = str(datetime.datetime.now())
 				file.write(strTime)
 				file.write(" :- ")
 				file.write(note)
@@ -353,7 +345,7 @@ if __name__ == '__main__':
 		
 		elif "show note" in query:
 			speak("Showing Notes")
-			file = open("jarvis.txt", "r")
+			file = open("v.txt", "r")
 			print(file.read())
 			speak(file.read(6))
 
