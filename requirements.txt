@@ -11,3 +11,4 @@ requests==2.25.1
 pyttsx3==2.90
 twilio==6.56.0
 beautifulsoup4==4.9.3
+PyAudio==0.2.11
