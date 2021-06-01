@@ -163,7 +163,7 @@ if __name__ == '__main__':
 
 
 		elif 'the time' in query:
-			strTime = datetime.datetime.now().strftime("% H:% M:% S")
+			strTime = datetime.datetime.now().strftime("%H %M %S")
 			speak(f"Sir, the time is {strTime}")
 
 		elif 'open opera' in query:
