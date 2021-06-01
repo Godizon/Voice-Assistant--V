@@ -4,6 +4,7 @@ import pyttsx3
 import tkinter
 import json
 import random
+import numpy as np 
 import operator
 import speech_recognition as sr
 import datetime
@@ -15,7 +16,9 @@ import pyjokes
 import feedparser
 import smtplib
 import ctypes
+import multiprocessing
 import time
+import cv2
 import requests
 import shutil
 from twilio.rest import Client
@@ -33,6 +36,30 @@ def speak(audio):
 	webbrowser.register('chrome',
 		None,
 		webbrowser.BackgroundBrowser("C://Program Files (x86)//Google//Chrome//Application//chrome.exe"))
+
+def video():
+
+	while True:
+		#This is to check whether to break the first loop
+		isclosed=0
+		cap = cv2.VideoCapture('sirilike.gif')
+		while (True):
+
+			ret, frame = cap.read()
+			# It should only show the frame when the ret is true
+			if ret == True:
+				cv2.imshow('frame',frame)
+				if cv2.waitKey(12) == 27:
+					# When esc is pressed isclosed is 1
+					isclosed=1
+					break
+			else:
+				break
+		# To break the loop if it is closed manually
+		if isclosed:
+			break
+	cap.release()
+	cv2.destroyAllWindows()
 
 def wishMe():
 	hour = int(datetime.datetime.now().hour)
@@ -96,15 +123,9 @@ def sendEmail(email_id,email_password,to, content):
 	server.login(email_id , email_password)
 	server.sendmail(email_id, to, content)
 	server.close()
-if __name__ == '__main__':
-	clear = lambda: os.system('cls')
-	
-	# This Function will clean any
-	# command before execution of this python file
-	clear()
-	wishMe()
-	usrname()
-	
+
+def comm():
+
 	while True:
 		
 		query = takeCommand().lower()
@@ -443,3 +464,20 @@ if __name__ == '__main__':
 		# elif "" in query:
 			# Command go here
 			# For adding more commands
+if __name__ == '__main__':
+	clear = lambda: os.system('cls')
+	
+	# This Function will clean any
+	# command before execution of this python file
+	clear()
+	p1 = multiprocessing.Process(name='p1', target=video)
+	p = multiprocessing.Process(name='p1', target=wishMe)
+	p3 = multiprocessing.Process(name='p1', target=usrname)
+	p4 = multiprocessing.Process(name='p1', target=comm)
+	p1.start()
+	p.start()
+	p.join()
+	p3.start()
+	p3.join()
+	p4.start()
+	p4.join()
