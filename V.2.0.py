@@ -42,14 +42,14 @@ def video():
 	while True:
 		#This is to check whether to break the first loop
 		isclosed=0
-		cap = cv2.VideoCapture('sirilike.gif')
+		cap = cv2.VideoCapture('speak.gif')
 		while (True):
 
 			ret, frame = cap.read()
 			# It should only show the frame when the ret is true
 			if ret == True:
 				cv2.imshow('frame',frame)
-				if cv2.waitKey(12) == 27:
+				if cv2.waitKey(25) == 27:
 					# When esc is pressed isclosed is 1
 					isclosed=1
 					break
