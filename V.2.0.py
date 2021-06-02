@@ -266,7 +266,7 @@ def comm():
 
 		elif 'power point presentation' in query:
 			speak("opening Power Point presentation")
-			#power = r"file location"
+			power = r"file location"
 			os.startfile(power)
 
 		elif 'what is love' in query:
