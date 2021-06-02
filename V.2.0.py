@@ -323,7 +323,7 @@ def comm():
 			speak("Recycle Bin Recycled")
 
 		elif "don't listen" in query or "stop listening" in query:
-			speak("for how much time you want to stop jarvis from listening commands")
+			speak("for how much time do you want to stop me from listening commands")
 			a = int(takeCommand())
 			time.sleep(a)
 			print(a)
@@ -384,10 +384,10 @@ def comm():
 					if ch:
 					 Pypdf.write(ch)
 					
-		elif "jarvis" in query:
+		elif "V " in query:
 			
 			wishMe()
-			speak("Jarvis 1 point o in your service Mister")
+			speak("V 2 point o in your service Mister")
 			speak(assname)
 
 		elif "weather" in query:
