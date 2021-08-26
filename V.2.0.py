@@ -16,14 +16,9 @@ import pyjokes
 import feedparser
 import smtplib
 import ctypes
-import multiprocessing
 import time
-import cv2
 import requests
 import shutil
-from twilio.rest import Client
-from clint.textui import progress
-from ecapture import ecapture as ec
 from bs4 import BeautifulSoup
 import win32com.client as wincl
 from urllib.request import urlopen
@@ -35,44 +30,24 @@ def speak(audio):
 	engine.runAndWait()
 	webbrowser.register('chrome',
 		None,
-		webbrowser.BackgroundBrowser("C://Program Files (x86)//Google//Chrome//Application//chrome.exe"))
-
-def video():
-
-	while True:
-		#This is to check whether to break the first loop
-		isclosed=0
-		cap = cv2.VideoCapture('speak.gif')
-		while (True):
-
-			ret, frame = cap.read()
-			# It should only show the frame when the ret is true
-			if ret == True:
-				cv2.imshow('frame',frame)
-				if cv2.waitKey(25) == 27:
-					# When esc is pressed isclosed is 1
-					isclosed=1
-					break
-			else:
-				break
-		# To break the loop if it is closed manually
-		if isclosed:
-			break
-	cap.release()
-	cv2.destroyAllWindows()
+		webbrowser.BackgroundBrowser("C://Program Files//Google//Chrome//Application//chrome.exe"))
 
 def wishMe():
 	hour = int(datetime.datetime.now().hour)
 	if hour>= 5 and hour<12:
 		speak("Good Morning Sir !")
+		print("Good Morning Sir !")
 	elif hour>= 0 and hour<5:
 		speak("Good Evening Sir! Maybe you should be sleeping?")
+		print("Good Morning Sir !")
 
 	elif hour>= 12 and hour<18:
 		speak("Good Afternoon Sir !")
+		print("Good Afternoon Sir !")
 
 	else:
 		speak("Good Evening Sir !")
+		print("Good Evening Sir !")
 
 	assname =("V 2 point o")
 	speak("I am your Assistant")
@@ -414,21 +389,6 @@ def comm():
 			
 			else:
 				speak(" City Not Found ")
-			
-		elif "send message " in query:
-				# You need to create an account on Twilio to use this service
-				account_sid = 'Account Sid key'
-				auth_token = 'Auth token'
-				client = Client(account_sid, auth_token)
-
-				message = client.messages \
-								.create(
-									body = takeCommand(),
-									from_='Sender No',
-									to ='Receiver No'
-								)
-
-				print(message.sid)
 
 		elif "wikipedia" in query:
 			webbrowser.open("wikipedia.com")
@@ -470,14 +430,7 @@ if __name__ == '__main__':
 	# This Function will clean any
 	# command before execution of this python file
 	clear()
-	p1 = multiprocessing.Process(name='p1', target=video)
-	p = multiprocessing.Process(name='p1', target=wishMe)
-	p3 = multiprocessing.Process(name='p1', target=usrname)
-	p4 = multiprocessing.Process(name='p1', target=comm)
-	p1.start()
-	p.start()
-	p.join()
-	p3.start()
-	p3.join()
-	p4.start()
-	p4.join()
+	wishMe()
+	usrname()
+	comm()
+    
