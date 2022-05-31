@@ -1,11 +1,8 @@
 import subprocess
 import wolframalpha
 import pyttsx3
-import tkinter
 import json
-import random
 import numpy as np 
-import operator
 import speech_recognition as sr
 import datetime
 import wikipedia
@@ -13,24 +10,35 @@ import webbrowser
 import os
 import winshell
 import pyjokes
-import feedparser
 import smtplib
 import ctypes
 import time
 import requests
 import shutil
-from bs4 import BeautifulSoup
-import win32com.client as wincl
 from urllib.request import urlopen
+
+#username and assistant name init
+uname=''
+assname=''
+engine=None
+voices=None
+#Sound engine Initialization
+
 engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
 engine.setProperty('voice', voices[1].id)
-def speak(audio):
-	engine.say(audio)
-	engine.runAndWait()
+print(type(engine))
+print(type(voices))
+
+
+def browser_init():#To initialize browser("Chrome")
 	webbrowser.register('chrome',
 		None,
 		webbrowser.BackgroundBrowser("C://Program Files//Google//Chrome//Application//chrome.exe"))
+
+def speak(audio):#Speak function that speaks out string in 'audio'
+	engine.say(audio)
+	engine.runAndWait()
 
 def wishMe():
 	hour = int(datetime.datetime.now().hour)
@@ -49,13 +57,13 @@ def wishMe():
 		speak("Good Evening Sir !")
 		print("Good Evening Sir !")
 
-	assname =("V 2 point o")
+	assname =("V 2 point 5")
 	speak("I am your Assistant")
 	speak(assname)
 	
 
 def usrname():
-	speak("What should i call you sir")
+	speak("What should i call you, Sir")
 	uname = takeCommand()
 	speak("Welcome Mister")
 	speak(uname)
@@ -90,6 +98,7 @@ def takeCommand():
 	return query
 
 def sendEmail(email_id,email_password,to, content):
+	
 	server = smtplib.SMTP('smtp.gmail.com', 587)
 	server.ehlo()
 	server.starttls()
@@ -99,7 +108,7 @@ def sendEmail(email_id,email_password,to, content):
 	server.sendmail(email_id, to, content)
 	server.close()
 
-def comm():
+def take_comm(): #to take command and decide action
 
 	while True:
 		
@@ -107,9 +116,9 @@ def comm():
 		
 		# All the commands said by user will be
 		# stored here in 'query' and will be
-		# converted to lower case for easily
+		# converted to lower case for easy
 		# recognition of command
-		if 'wikipedia' in query:
+		if 'wikipedia' in query:  #searches wikipedia
 			speak('Searching Wikipedia...')
 			query = query.replace("wikipedia", "")
 			results = wikipedia.summary(query, sentences = 3)
@@ -117,7 +126,7 @@ def comm():
 			print(results)
 			speak(results)
 
-		elif 'open youtube' in query:
+		elif 'open youtube' in query:  #searches youtube
 			speak("Here you go to Youtube\n")
 			webbrowser.get('chrome').open("youtube.com")
 
@@ -133,10 +142,15 @@ def comm():
 			speak("Here you go to Stack Over flow.Happy coding")
 			webbrowser.get('chrome').open("stackoverflow.com")
 
+		elif 'anime' in query and 'watch' in query:
+			speak("Here you go to pirated anime, freeloader kun")
+			webbrowser.get('chrome').open("animixplay.to")
+
 		elif 'open' and 'in browser' in query:
 			speak("Here you go to requested site\n")
 			query = query.replace('open ', "")
 			query = query.replace(' in browser', "")
+			query = query.replace(' ', "")
 			webbrowser.get('chrome').open(query+".com")
 
 		elif 'play music' in query or "play song" in query:
@@ -146,7 +160,9 @@ def comm():
 			#songs = os.listdir(music_dir)
 			#print(songs)
 			#random = os.startfile(os.path.join(music_dir, songs[1]))
-			choice=takeCommand()
+
+			choice  =takeCommand() #takes in choice for music streaming
+			
 			if "spotify" or "Spotify" in choice:
 					webbrowser.get('chrome').open("https://open.spotify.com/")
 			elif "youtube" or "Youtube" in choice:
@@ -187,24 +203,26 @@ def comm():
 			speak("I am fine, Thank you")
 			speak("How are you, Sir")
 
-		elif 'fine' in query or "good" in query:
+		elif 'fine' in query or "good" in query and 'goodbye' not in query:
 			speak("It's good to know that your fine")
 
 		elif "change my name to" in query:
 			query = query.replace("change my name to", "")
-			assname = query
+			uname = query
+			speak("Your new name is")
+			speak(uname)
 
-		elif "change name" in query:
+		elif "change your name" in query:
 			speak("What would you like to call me, Sir ")
 			assname = takeCommand()
 			speak("Thanks for naming me")
 
-		elif "what's your name" in query or "What is your name" in query:
+		elif "what is your name" in query or "What is your name" in query:
 			speak("My friends call me")
 			speak(assname)
 			print("My friends call me", assname)
 
-		elif 'exit' in query:
+		elif 'goodbye' in query:
 			speak("Thanks for giving me your time")
 			exit()
 
@@ -216,7 +234,7 @@ def comm():
 			
 		elif "calculate" in query:
 			
-			app_id = "Wolframalpha api id"
+			app_id = "292XG9-7ULHXWWTK5"
 			client = wolframalpha.Client(app_id)
 			indx = query.lower().split().index('calculate')
 			query = query.split()[indx + 1:]
@@ -233,11 +251,11 @@ def comm():
 			#print("hello")
 			#webbrowser.get('windows-default').open("http://google.com/?#q="+query)
 
-		elif "who i am" in query:
-			speak("If you talk then definately your human.")
+		elif "who am i" in query:
+			speak("If you can talk then definitely you're human.")
 
 		elif "why you came to world" in query:
-			speak("To Serve")
+			speak("To Serve you")
 
 		elif 'power point presentation' in query:
 			speak("opening Power Point presentation")
@@ -245,7 +263,7 @@ def comm():
 			os.startfile(power)
 
 		elif 'what is love' in query:
-			speak("It is 7th sense that destroy all other senses")
+			speak("It is the 7th sense that destroy all other senses")
 
 		elif "who are you" in query:
 			speak("I am your virtual assistant created by godizon")
@@ -254,10 +272,7 @@ def comm():
 			speak("I was created as a Minor project by godizon ")
 
 		elif 'change background' in query:
-			ctypes.windll.user32.SystemParametersInfoW(20,
-													0,
-													"Location of wallpaper",
-													0)
+			ctypes.windll.user32.SystemParametersInfoW(20,0,"F:\download (1).jfif",0)
 			speak("Background changed succesfully")
 
 		elif 'open bluestack' in query:
@@ -267,7 +282,7 @@ def comm():
 		elif 'news' in query:
 			
 			try:
-				jsonObj = urlopen('''https://newsapi.org / v1 / articles?source = the-times-of-india&sortBy = top&apiKey =\\times of India Api key\\''')
+				jsonObj = urlopen('''https://newsapi.org/v1/articles?source=the-times-of-india&sortB=top&apiKey=335cdc678b454e17abf6713d929111fb''')
 				data = json.load(jsonObj)
 				i = 1
 				
@@ -308,7 +323,7 @@ def comm():
 			location = query
 			speak("User asked to Locate")
 			speak(location)
-			webbrowser.open("https://www.google.com / maps / place/" + location + "")
+			webbrowser.open("https://www.google.com/maps/place/" + location + "")
 
 		elif "camera" in query or "take a photo" in query:
 			ec.capture(0, "V Camera ", "img.jpg")
@@ -318,7 +333,7 @@ def comm():
 			
 		elif "hibernate" in query or "sleep" in query:
 			speak("Hibernating")
-			subprocess.call("shutdown / h")
+			subprocess.call("shutdown", "/h")
 
 		elif "log off" in query or "sign out" in query:
 			speak("Make sure all the application are closed before sign-out")
@@ -358,7 +373,7 @@ def comm():
 									expected_size =(total_length / 1024) + 1):
 					if ch:
 					 Pypdf.write(ch)
-					
+			
 		elif "V " in query:
 			
 			wishMe()
@@ -369,12 +384,12 @@ def comm():
 			
 			# Google Open weather website
 			# to get API of Open weather
-			api_key = "Api key"
-			base_url = "http://api.openweathermap.org / data / 2.5 / weather?"
+			api_key = "348e359a8d7b4edbf28643db7db05eeb"
+			base_url = "http://api.openweathermap.org/data/2.5/weather?"
 			speak(" City name ")
 			print("City name : ")
 			city_name = takeCommand()
-			complete_url = base_url + "appid =" + api_key + "&q =" + city_name
+			complete_url = base_url + "appid=" + api_key + "&q=" + city_name
 			response = requests.get(complete_url)
 			x = response.json()
 			
@@ -390,7 +405,7 @@ def comm():
 			else:
 				speak(" City Not Found ")
 
-		elif "wikipedia" in query:
+		elif "open wikipedia" in query:
 			webbrowser.open("wikipedia.com")
 
 		elif "Good Morning" in query:
@@ -402,9 +417,6 @@ def comm():
 		elif "will you be my gf" in query or "will you be my bf" in query:
 			speak("I'm not sure about that, may be you should give me some more time")
 
-		elif "how are you" in query:
-			speak("I'm fine, glad you asked me that")
-
 		elif "i love you" in query:
 			speak("It's too hard for me to comprehend the significance of such words")
 
@@ -412,7 +424,7 @@ def comm():
 			
 			# Use the same API key
 			# that we have generated earlier
-			client = wolframalpha.Client("API_ID")
+			client = wolframalpha.Client("292XG9-7ULHXWWTK5")
 			res = client.query(query)
 			
 			try:
@@ -431,6 +443,7 @@ if __name__ == '__main__':
 	# command before execution of this python file
 	clear()
 	wishMe()
+	browser_init()
 	usrname()
-	comm()
+	take_comm()
     
