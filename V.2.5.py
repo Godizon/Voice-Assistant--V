@@ -16,6 +16,8 @@ import time
 import requests
 import shutil
 from urllib.request import urlopen
+import cv2 as ec
+
 
 #username and assistant name init
 uname=''
@@ -83,6 +85,7 @@ def takeCommand():
 		
 		print("Listening...")
 		r.pause_threshold = 1
+		r.energy_threshold=600
 		audio = r.listen(source)
 
 	try:
@@ -326,7 +329,15 @@ def take_comm(): #to take command and decide action
 			webbrowser.open("https://www.google.com/maps/place/" + location + "")
 
 		elif "camera" in query or "take a photo" in query:
-			ec.capture(0, "V Camera ", "img.jpg")
+			cam = ec.VideoCapture(0)
+			s, img = cam.read()
+			if s:    # frame captured without any errors
+				ec.namedWindow("cam-test",ec.WINDOW_FULLSCREEN)
+				ec.imshow("cam-test",img)
+				ec.waitKey(0)
+				ec.destroyWindow("cam-test")
+				print(ec.imwrite("F:/V test/filename.jpg",img))
+				ec.imwrite("filename.jpg",img) #save image
 
 		elif "restart" in query:
 			subprocess.call(["shutdown", "/r"])
@@ -360,21 +371,6 @@ def take_comm(): #to take command and decide action
 			print(file.read())
 			speak(file.read(6))
 
-
-		elif "update assistant" in query:
-			speak("After downloading file please replace this file with the downloaded one")
-			url = '# url after uploading file'
-			r = requests.get(url, stream = True)
-			
-			with open("Voice.py", "wb") as Pypdf:
-				
-				total_length = int(r.headers.get('content-length'))
-				
-				for ch in progress.bar(r.iter_content(chunk_size = 2391975),
-									expected_size =(total_length / 1024) + 1):
-					if ch:
-					 Pypdf.write(ch)
-
 		elif "weather" in query:
 			
 			# Google Open weather website
@@ -404,7 +400,7 @@ def take_comm(): #to take command and decide action
 			webbrowser.open("wikipedia.com")
 
 		elif "Good Morning" in query:
-			speak("A warm" +query)
+			speak("A warm Good Morning " )
 			speak("How are you Mister")
 			speak(assname)
 
