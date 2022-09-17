@@ -1,8 +1,10 @@
 # Voice-Assistant--V
-For the Assistant to work properly.
+Download The V.2.5.exe file directly and run it to make the assistant work.
+For the Code to run properly yourself.
 Download PyAudio: bindings for the PortAudio library according to your python version (Python 3.6 above) from https://www.lfd.uci.edu/~gohlke/pythonlibs/.
 After that run the command  "pip install -r requirements.txt".This is a project in development.Newer functions will be added soon.The currently available
 Visual C++ 14 tools are necessary for facial recognition.
+
 
 Available Commands List :
 
