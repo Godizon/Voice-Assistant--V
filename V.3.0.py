@@ -90,7 +90,7 @@ def usrname():
             storage=os.path.abspath(__file__)
             storagen=storage.replace('V.3.0.py', '')
             storagen=storagen.replace("\\", '/')
-            print(storagen)
+
             ec.imwrite(os.path.join(storagen+'/face_storage' ,uname+".jpg"),img) #save image
       else:
         speak("can you please repeat your name again")
